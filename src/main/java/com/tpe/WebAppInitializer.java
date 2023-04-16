@@ -14,13 +14,14 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     @Override //DB'ye erisim icin gerekli config ayarlarini iceren class
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[0];
+        return new Class[]{
+                RootContextConfig.class};
     }
 
-    @Override //Controlle,Handler Mapping,View Resolver ile ilgili config
+    @Override //Controlle,Handler Mapping,View Resolver(SpringMVC) ile ilgili config
     protected Class<?>[] getServletConfigClasses() {
         return new Class[]{
-         WebMvcConfig.class
+                WebMvcConfig.class
         };
     }
 
