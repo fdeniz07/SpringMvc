@@ -32,16 +32,42 @@ public class StudentRepositoryImpl implements StudentRepository{
 
     @Override
     public List<Student> findAll() {
-        return null;
+        Session session=sessionFactory.openSession();
+        Transaction transaction=session.beginTransaction();
+
+        List<Student> studentList=session.createQuery("FROM Student",Student.class).getResultList();
+
+        transaction.commit();
+        session.close();
+
+        return studentList;
     }
 
     @Override
     public Optional<Student> findById(Long id) {
-        return Optional.empty();
+        Session session=sessionFactory.openSession();
+        Transaction transaction=session.beginTransaction();
+
+       Student student=session.get(Student.class,id);
+       Optional<Student> opt =Optional.ofNullable(student); //student yoksa ici bos bir optional objesi döndürür. NullPointerException almayiz.
+
+        transaction.commit();
+        session.close();
+
+        return opt;
     }
 
     @Override
     public void delete(Long id) {
+        Session session=sessionFactory.openSession();
+        Transaction transaction=session.beginTransaction();
+
+        Student student= session.load(Student.class,id); //silecegimiz objeyi proxy olarak getirmesi yeterli
+        session.delete(student);
+
+        transaction.commit();
+        session.close();
+
 
     }
 }
