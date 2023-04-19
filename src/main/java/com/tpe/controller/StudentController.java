@@ -4,10 +4,7 @@ import com.tpe.domain.Student;
 import com.tpe.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
@@ -63,4 +60,14 @@ public class StudentController {
         return mav;
     }
 
+
+    //3-update:http://localhost:8080/SpringMVC/students/update?id=4
+    @GetMapping("/update")
+    public ModelAndView showFormForUpdate(@RequestParam("id") Long id){
+        Student foundStudent=service.getStudentById(id);
+        ModelAndView mav=new ModelAndView();
+        mav.addObject("student",foundStudent);
+        mav.setViewName("studentForm");
+        return mav;
+    }
 }
